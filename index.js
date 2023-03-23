@@ -1,6 +1,6 @@
 import express from "express"
-import cors from "cors"
 import mongoose from "mongoose"
+import cors from "cors"
 
 const app=express()
 app.use(express.json())
@@ -8,8 +8,6 @@ app.use(express.urlencoded())
 app.use(cors())
 
 mongoose.connect("mongodb://localhost:27017/myLoginDB",{
-    useNewUelParser: true,
-    useUnifiedTopology:true
 }, ()=>{
     console.log("DB connected")
 })
@@ -43,12 +41,14 @@ app.post("/register",(req,res)=>{
             res.send({message:"user already registered"})
         }
         else{
+            
             const user=new User({
                 name,
                 email,
                 password
             })
-            user.save(err=>{
+            
+            user.save((err)=>{
                 if(err){
                     res.send(err)
                 }
